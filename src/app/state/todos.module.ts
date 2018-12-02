@@ -9,19 +9,23 @@ import * as fromTodos from './todos.reducer';
 import { TodosEffects } from './todos.effects';
 import { TodosService } from './todos.service';
 import { TodosListComponent } from '../todos/todos-list';
- @NgModule({
+import { TodosItemComponent } from '../todos/todo-item';
+
+@NgModule({
   imports: [
     CommonModule,
     FormsModule,
     MaterialModule,
     RouterModule.forChild([
       { path: '', component: TodosListComponent },
+      { path : ':id', component: TodosItemComponent }
     ]),
     StoreModule.forFeature('todos', fromTodos.reducer),
     EffectsModule.forFeature([TodosEffects]),
   ],
   declarations: [
-    TodosListComponent
+    TodosListComponent,
+    TodosItemComponent
   ],
   providers: [TodosService],
 })

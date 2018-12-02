@@ -7,6 +7,7 @@ export interface State extends EntityState<Todo> {
   loading: boolean;
   loaded: boolean;
   saved: boolean;
+  selectedId: string | number;
 }
 
 export function sortByState(a: Todo, b: Todo): number {
@@ -22,7 +23,8 @@ export const adapter: EntityAdapter<Todo> = createEntityAdapter<Todo>({
 export const initialState: State = adapter.getInitialState({
   loaded: false,
   loading: false,
-  saved: false
+  saved: false,
+  selectedId: null
 });
 
  export function reducer(state = initialState, action: TodosActions): State {
@@ -65,18 +67,35 @@ export const initialState: State = adapter.getInitialState({
         saved: false
       };
     }
+    case TodosActionTypes.SelectOne: {
+      return {
+        ...state,
+        selectedId: action.todoId
+      };
+    }
     default: {
       return state;
     }
   }
 }
 
+export const {
+  selectIds: selectTodoIds,
+  selectEntities: selectTodosEntities,
+  selectAll: selectAllTodos,
+  selectTotal: todosCount
+} = adapter.getSelectors();
+
 export const getTodosState = createFeatureSelector<State>('todos');
 
-export const getTodosLoading = (state: State) => state.loading;
-export const getTodosSaved = (state: State) => state.saved;
+export const getTodosid = createSelector(getTodosState, selectTodoIds);
+export const getTodosEntities = createSelector(getTodosState, selectTodosEntities);
+export const getAllTodos = createSelector(getTodosState, selectAllTodos);
+export const getCount = createSelector(getTodosState, todosCount);
 
-export const selectTodosLoading = createSelector(getTodosState, getTodosLoading);
-export const selectTodosSaved = createSelector(getTodosState, getTodosSaved);
+export const getTodosLoading = createSelector(getTodosState, (state: State) => state.loading);
+export const getTodosLoaded = createSelector(getTodosState, (state: State) => state.loaded);
+export const getTodosSaved = createSelector(getTodosState, (state: State) => state.saved);
+export const getSelectId = createSelector(getTodosState, (state: State) => state.selectedId);
 
-export const { selectAll: selectAllTodos } = adapter.getSelectors(getTodosState);
+export const getCurrentTodo = createSelector(getTodosEntities, getSelectId, (entities, todoId) => entities[todoId]);

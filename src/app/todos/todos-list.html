@@ -7,7 +7,9 @@
       <mat-list-item *ngFor="let todo of (todos); let index = i" class="list-item">
         <mat-checkbox (change)="switchTodoState(todo)" color="primary" type="checkbox" [name]="'item'+i" [(ngModel)]="todo.state">
         </mat-checkbox>
-        <span [class.completed]="todo.state">{{ todo.title }}</span>
+          <div class="clickable" [routerLink]="['/todos', todo.id]">
+            <span [class.completed]="todo.state">{{ todo.title }}</span>
+          </div>        
       </mat-list-item>
     </mat-list>
   </mat-card-content>

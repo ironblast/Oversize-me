@@ -1,0 +1,13 @@
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;  
+}
+.mat-form-field {
+  width: 100%;
+  padding-top: 10px;
+}
+ .form-btn {
+  display: flex;
+  justify-content: space-around;
+}
