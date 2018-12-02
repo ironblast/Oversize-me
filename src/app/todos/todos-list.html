@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-card-title color="primary">
+    <h2>Todos</h2>
+  </mat-card-title>
+   <mat-card-content>
+    <mat-list *ngIf="todos$ | async as todos">
+      <mat-list-item *ngFor="let todo of (todos); let index = i" class="list-item">
+        <mat-checkbox disable="true" color="primary" [name]="'item'+i" [(ngModel)]="todo.state">
+        </mat-checkbox>
+        <span [class.completed]="todo.state">{{ todo.title }}</span>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
