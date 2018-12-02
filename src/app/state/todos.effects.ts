@@ -7,7 +7,10 @@ import { TodosService } from './todos.service';
 import {
   TodosActionTypes,
   LoadFail,
-  LoadSuccess
+  LoadSuccess,
+  Save,
+  SaveSuccess,
+  SaveFail
 } from './todos.actions';
 import { Todo } from './todo';
 
@@ -25,5 +28,15 @@ export class TodosEffects {
         catchError(error => of(new LoadFail(error)))
       )
     )
+  );
+
+  @Effect()
+  saveTodos$: Observable<Action> = this.action$.pipe(
+    ofType(TodosActionTypes.Save),
+    switchMap((action: Save) =>
+    this.todoService.saveTodo(action.todo).pipe(
+      map((todo: Todo) => new SaveSuccess(todo)),
+      catchError(error => of(new SaveFail(error)))
+    ))
   );
 }

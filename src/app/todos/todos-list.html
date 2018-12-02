@@ -5,7 +5,7 @@
    <mat-card-content>
     <mat-list *ngIf="todos$ | async as todos">
       <mat-list-item *ngFor="let todo of (todos); let index = i" class="list-item">
-        <mat-checkbox disable="true" color="primary" [name]="'item'+i" [(ngModel)]="todo.state">
+        <mat-checkbox (change)="switchTodoState(todo)" color="primary" type="checkbox" [name]="'item'+i" [(ngModel)]="todo.state">
         </mat-checkbox>
         <span [class.completed]="todo.state">{{ todo.title }}</span>
       </mat-list-item>

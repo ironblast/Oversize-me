@@ -17,4 +17,13 @@ describe('workspace-project App', () => {
     page.waitForList();
     expect(page.getTodos());
   });
+
+  it('should change the todo state by checking the input', () => {
+    page.navigateTo();
+    page.waitForList();
+
+    const todo = page.getTodoAtPosition(2);
+    page.clickTodoCheckInput(todo);
+    expect(page.todoIsCheck(todo)).toBeTruthy();
+  });
 });

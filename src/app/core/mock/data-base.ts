@@ -1,4 +1,5 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
+import { ResponseOptions } from '@angular/http';
 
 export class DataService implements InMemoryDbService {
   createDb() {
@@ -23,5 +24,11 @@ export class DataService implements InMemoryDbService {
       }
     ];
     return { todos };
+  }
+
+  responseInterceptor(resOptions: ResponseOptions, reqInfo: RequestInfo) {
+    console.log('[Requete]', reqInfo);
+    console.log('[Reponse]', resOptions);
+    return resOptions;
   }
 }
