@@ -1,6 +1,7 @@
 <mat-card>
   <mat-card-title color="primary">
     <h2>Todos</h2>
+    <button mat-raised-button [routerLink]="['/todos', 'new']" color="primary">New todo</button>
   </mat-card-title>
    <mat-card-content>
     <mat-list *ngIf="todos$ | async as todos">

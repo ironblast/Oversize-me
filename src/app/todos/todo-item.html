@@ -1,18 +1,21 @@
-<mat-card *ngIf="todo$ | async as todo">
+<mat-card>
   <mat-toolbar color="primary">
-    {{ todo.title }}
+   Détail
   </mat-toolbar>
+
    <mat-card-content>
-    <div class="form">
+    <form [formGroup]="form" (ngSubmit)="submit()">
       <mat-form-field>
-        <input matInput placeholder="Titre" [value]="todo.title" readonly="true">
+        <input matInput placeholder="Titre" formControlName="title" />
+        <mat-error *ngIf="isError('title')">{{ getErrorMessage('title') }}</mat-error>
       </mat-form-field><br>
       <mat-form-field>
-        <textarea matInput placeholder="Description" [value]="todo.description" readonly="true" matTextareaAutosize></textarea>
+        <textarea matInput placeholder="Description" formControlName="description" matTextareaAutosize></textarea>
       </mat-form-field>
-    </div>
-    <button mat-raised-button [routerLink]="['/todos']">
-      Retour
-    </button>
+      <div class="form-btn">
+        <button mat-raised-button color="primary" type="submit" mat-button>Oversize ta journée</button>
+        <button mat-raised-button [routerLink]="['/todos']">Retour</button>
+      </div>
+    </form>      
   </mat-card-content>
 </mat-card>
