@@ -13,8 +13,10 @@
         <textarea matInput placeholder="Description" formControlName="description" matTextareaAutosize></textarea>
       </mat-form-field>
       <div class="form-btn">
+        <button mat-raised-button color="primary" type="button" mat-button (click)="previous()">Previous</button>
         <button mat-raised-button color="primary" type="submit" mat-button>Oversize ta journée</button>
         <button mat-raised-button [routerLink]="['/todos']">Retour</button>
+        <button mat-raised-button color="primary" type="button" mat-button (click)="next()">Next</button>
       </div>
     </form>      
   </mat-card-content>

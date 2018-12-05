@@ -8,7 +8,10 @@ export enum TodosActionTypes {
   Save = '[Todos] Save',
   SaveSuccess = '[Todos] Save Success',
   SaveFail = '[Todos] Save Fail',
-  SelectOne = '[Todos] Select One'
+  SelectOne = '[Todos] Select One',
+  Delete = '[Todos] Delete',
+  DeleteFail = '[Todos] Delete Fail',
+  DeleteSuccess = '[Todos] Delete Success'
 }
 
 export class Load implements Action {
@@ -32,7 +35,7 @@ export class Save implements Action {
 
 export class SaveSuccess implements Action {
   readonly type = TodosActionTypes.SaveSuccess;
-  constructor(public todo : Todo) { }
+  constructor(public todo: Todo) { }
 }
 
 export class SaveFail implements Action {
@@ -45,11 +48,29 @@ export class SelectOne implements Action {
   constructor(public todoId: string) { }
 }
 
-export type TodosActions = 
+export class Delete implements Action {
+  readonly type = TodosActionTypes.Delete;
+  constructor(public todo: { id: number }) { }
+}
+
+export class DeleteFail implements Action {
+  readonly type = TodosActionTypes.DeleteFail;
+  constructor(public payload: any) { }
+}
+
+export class DeleteSuccess implements Action {
+  readonly type = TodosActionTypes.DeleteSuccess;
+  constructor(public todo: { id: number }) { }
+}
+
+export type TodosActions =
   | Load
   | LoadSuccess
   | LoadFail
   | Save
   | SaveSuccess
   | SaveFail
-  | SelectOne;
+  | SelectOne
+  | Delete
+  | DeleteFail
+  | DeleteSuccess;

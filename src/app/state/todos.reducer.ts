@@ -10,17 +10,28 @@ export interface State extends EntityState<Todo> {
   selectedId: string | number;
 }
 
-export function sortByState(a: Todo, b: Todo): number {
-  return a.state === b.state ? a.id - b.id : b.state ? -1 : 1;
+export function sortByState(todo1: Todo, todo2: Todo): number {
+  if (todo1.state === todo2.state) {
+    if (todo1.state) {
+      return todo1.lastUpdate - todo2.lastUpdate;
+    } else {
+      return todo2.lastUpdate - todo1.lastUpdate;
+    }
+  } else if (todo1.state) {
+    return 1;
+  } else {
+    return -1;
+  }
 }
 
 export const adapter: EntityAdapter<Todo> = createEntityAdapter<Todo>({
   selectId: (todo: Todo) => todo.id,
   sortComparer: sortByState
-})
+});
 
 // Initial state
 export const initialState: State = adapter.getInitialState({
+  data: [],
   loaded: false,
   loading: false,
   saved: false,
@@ -72,6 +83,19 @@ export const initialState: State = adapter.getInitialState({
         ...state,
         selectedId: action.todoId
       };
+    }
+    case TodosActionTypes.Delete: {
+      return {
+        ...state
+      };
+    }
+    case TodosActionTypes.DeleteFail: {
+      return {
+        ...state
+      };
+    }
+    case TodosActionTypes.DeleteSuccess: {
+      return adapter.removeOne(action.todo.id, state);
     }
     default: {
       return state;

@@ -25,18 +25,24 @@ export class TodosListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new todos.Load());
+
+    // Load todos if not loaded
     this.store.pipe(
       select(fromTodos.getTodosLoaded),
       first()
     ).subscribe((loaded) => {
       if (!loaded) {
-        this.store.dispatch(new todos.Load);
+        this.store.dispatch(new todos.Load());
       }
     });
   }
 
   switchTodoState(todo: Todo) {
+    todo.lastUpdate = Date.now();
     this.store.dispatch(new todos.Save(todo));
+  }
+
+  removeTodo(todoId: number) {
+    this.store.dispatch(new todos.Delete({ id: todoId }));
   }
 }

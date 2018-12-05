@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Observable, of, from } from 'rxjs';
@@ -10,7 +10,10 @@ import {
   LoadSuccess,
   Save,
   SaveSuccess,
-  SaveFail
+  SaveFail,
+  Delete,
+  DeleteFail,
+  DeleteSuccess
 } from './todos.actions';
 import { Todo } from './todo';
 
@@ -22,7 +25,7 @@ export class TodosEffects {
   @Effect()
   loadTodos$: Observable<Action> = this.action$.pipe(
     ofType(TodosActionTypes.Load),
-    switchMap(() => 
+    switchMap(() =>
       this.todoService.getTodos().pipe(
         map((todos: Todo[]) => new LoadSuccess(todos)),
         catchError(error => of(new LoadFail(error)))
@@ -39,4 +42,14 @@ export class TodosEffects {
       catchError(error => of(new SaveFail(error)))
     ))
   );
+
+  @Effect()
+  deleteTodos$: Observable<Action> = this.action$.pipe(
+    ofType(TodosActionTypes.Delete),
+    switchMap((action: Delete) =>
+    this.todoService.deleteTodo(action.todo.id).pipe(
+      map((() => new DeleteSuccess(action.todo)),
+      catchError((error) => of(new DeleteFail(error)))
+    ))
+  ));
 }
