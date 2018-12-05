@@ -8,19 +8,22 @@ export class DataService implements InMemoryDbService {
         id: 1,
         state: true,
         title: `S'occuper des enfants`,
-        description: `Pas d'Ipad...`
+        description: `Pas d'Ipad...`,
+        lastUpdate: 0
       },
       {
         id: 2,
         state: true,
         title: `Passer l'aspirateur`,
-        description: 'sans oublier de passer sous les meubles'
+        description: 'sans oublier de passer sous les meubles',
+        lastUpdate: 0
       },
       {
         id: 3,
         state: false,
         title: 'Faire du sport',
-        description: `Si il pleut pas...Il pleut...`
+        description: `Si il pleut pas...Il pleut...`,
+        lastUpdate: 0
       }
     ];
     return { todos };

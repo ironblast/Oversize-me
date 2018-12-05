@@ -10,7 +10,8 @@
         </mat-checkbox>
           <div class="clickable" [routerLink]="['/todos', todo.id]">
             <span [class.completed]="todo.state">{{ todo.title }}</span>
-          </div>        
+          </div>
+        <button mat-raised-button (click)="removeTodo(todo.id)" color="primary" [routerLink]="['/todos']">Remove todo</button> 
       </mat-list-item>
     </mat-list>
   </mat-card-content>
