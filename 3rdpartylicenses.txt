@@ -398,9 +398,9 @@ THE SOFTWARE.
 
 @angular/material/checkbox
 
-@angular/material/card
-
 @angular/material/button
+
+@angular/material/card
 
 @ngrx/entity
 MIT
