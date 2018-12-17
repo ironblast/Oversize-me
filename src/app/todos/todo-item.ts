@@ -19,7 +19,6 @@ export class TodosItemComponent implements OnInit, OnDestroy {
   actionsSubscription: Subscription;
   refreshSubscription: Subscription;
 
-
   form: FormGroup;
 
   constructor(
@@ -33,19 +32,14 @@ export class TodosItemComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.createForm();
 
-    // Load todos if not loaded
-    this.store.pipe(
-      select(fromTodos.getTodosLoaded),
-      first()
-    ).subscribe((loaded) => {
-      if (!loaded) {
-        this.store.dispatch(new todos.Load());
-      }
-    });
-
     // Observe on change todo id
     this.actionsSubscription = this.route.params
-      .pipe(map(params => new todos.SelectOne(params.id)))
+      .pipe(map(params => {
+        if (params.id === 'new') {
+          this.form.value.id = null;
+        }
+        return new todos.SelectOne(params.id);
+      }))
       .subscribe(this.store);
 
     // Observe when current todo is modified
@@ -56,6 +50,8 @@ export class TodosItemComponent implements OnInit, OnDestroy {
         this.form.patchValue(data);
       } else if (this.form.value.id) {
         this.router.navigate(['/todos', this.form.value.id]);
+      } else {
+        this.form.reset();
       }
     });
   }

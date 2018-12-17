@@ -53,12 +53,6 @@ export const initialState: State = adapter.getInitialState({
         loaded: true
       });
     }
-    case TodosActionTypes.LoadFail: {
-      return {
-        ...state,
-        loaded: false
-      };
-    }
     case TodosActionTypes.Save: {
       return {
         ...state,
@@ -72,24 +66,20 @@ export const initialState: State = adapter.getInitialState({
         saved: true
       });
     }
-    case TodosActionTypes.SaveFail: {
+    case TodosActionTypes.LoadFail:
+    case TodosActionTypes.SaveFail:
       return {
         ...state,
         saved: false
       };
-    }
     case TodosActionTypes.SelectOne: {
       return {
         ...state,
         selectedId: action.todoId
       };
     }
+    case TodosActionTypes.DeleteFail:
     case TodosActionTypes.Delete: {
-      return {
-        ...state
-      };
-    }
-    case TodosActionTypes.DeleteFail: {
       return {
         ...state
       };

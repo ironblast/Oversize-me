@@ -20,8 +20,6 @@ export class TodosListComponent implements OnInit {
 
   constructor(private store: Store<fromTodos.State>) {
     this.todos$ = this.store.pipe(select(fromTodos.getAllTodos));
-    this.loading$ = this.store.pipe(select(fromTodos.getTodosLoading));
-    this.saved$ = this.store.pipe(select(fromTodos.getTodosSaved));
   }
 
   ngOnInit() {
